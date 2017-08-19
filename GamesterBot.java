@@ -3,6 +3,8 @@ package com.homedev.bot;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.TelegramBotAdapter;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.model.request.ForceReply;
+import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.GetMe;
 import com.pengrad.telegrambot.request.GetUpdates;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -17,6 +19,8 @@ public class GamesterBot {
     static final String BOT_TOKEN = "404808549:AAEQGg_6K4W3JiDor3MIXCJOldYmLqV1sLw";
 
     static TelegramBot bot = TelegramBotAdapter.build( BOT_TOKEN );
+
+    private int[][] chat;
 
     private static List<Update> GetUpdateList(int timeout, int offset) {
 
@@ -61,15 +65,17 @@ public class GamesterBot {
 
                 for ( int iUpdate = 0; iUpdate < sizeOfUpdates; iUpdate++ ) {
 
-                    String message = updates.get( iUpdate ).message( ).text( ).toString( );
+                    String message = updates.get( iUpdate ).message( ).text( );
                     lastProcessedUpdateId = updates.get( iUpdate ).updateId( );
 
-                    //System.out.println( updates.get( iUpdate ) );
-                    System.out.println( message );
+                    long chatId = updates.get( iUpdate ).message( ).chat( ).id( );
+
+                    //message logs
+                    System.out.printf( "%d : %s\n", chatId, message );
 
                     //trying to resend back message
-                    long chatId = updates.get( iUpdate ).message( ).chat( ).id( );
                     SendMessage request = new SendMessage( chatId, message );
+                    bot.execute( request );
                 }
             }
         } while ( true );

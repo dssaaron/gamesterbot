@@ -29,22 +29,22 @@ public class Deck {
         if ( amount == 36) {
             for ( int l = 0; l < 17; l++ ) {
 
-                card[ l ].SetAvailability( false );
+                card[ l ].setAvailability( false );
             }
 
-            card[ 52 ].SetAvailability( false );
-            card[ 53 ].SetAvailability( false );
+            card[ 52 ].setAvailability( false );
+            card[ 53 ].setAvailability( false );
         }
     }
 
-    void ShowDeck( ) {
+    void showDeck( ) {
 
         System.out.println( cardAmount );
 
         for ( int k = 0; k < 54; k++ ) {
 
-            if ( card[ k ].IsAvailable( ) ) {
-                System.out.println(card[k].ShowLabel());
+            if ( card[ k ].isAvailable( ) ) {
+                System.out.println(card[k].showLabel());
             }
         }
     }

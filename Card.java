@@ -13,20 +13,20 @@ public class Card {
         suit = cardSuit;
         availability = true;
 
-        SetLabel( );
+        setLabel( );
     }
 
-    int GetDenomination( ) { return denomination; }
+    int getDenomination( ) { return denomination; }
 
-    int GetSuit( ) { return suit; }
+    int getSuit( ) { return suit; }
 
-    boolean IsAvailable( ) { return availability; }
+    boolean isAvailable( ) { return availability; }
 
-    void SetAvailability( boolean cardAvailability ) { availability = cardAvailability; }
+    void setAvailability( boolean cardAvailability ) { availability = cardAvailability; }
 
-    String ShowLabel( ) { return label; }
+    String showLabel( ) { return label; }
 
-    private void SetLabel( ) {
+    private void setLabel( ) {
 
         switch ( denomination ) {
 

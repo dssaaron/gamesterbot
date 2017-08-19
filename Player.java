@@ -1,20 +1,51 @@
 package com.homedev.bot;
 
+import java.util.List;
+
+//Class of player that can play a game in some room
 public class Player {
 
     private int id;
     private String name;
-    private int cardAmount;
-    private Card[] card; // somehow should get cards one by one even if there are more than 2 cards
+    private List<Card> cards;
     private int balance;
 
-    void SetId( int newId ) { id = newId; }
-    void SetName( String newName ) { name = newName; }
-    void SetCardAmount( int newCardAmount ) { cardAmount = newCardAmount; }
-    void SetBalance( int newBalance ) { balance = newBalance; }
+    Player( int newId, String newName ) {
 
-    int GetId( ) { return id; }
-    String GetName( ) { return name; }
-    int GetCardAmount( ) { return cardAmount; }
-    int GetBalance( ) { return balance; }
+        balance = 100;
+        id = newId;
+        name = newName;
+    }
+
+    int getId( ) {
+        return id;
+    }
+
+    String getName( ) {
+        return name;
+    }
+
+    List<Card> getCards( ) {
+        return cards;
+    }
+
+    int getBalance( ) {
+        return balance;
+    }
+
+    void giveCards( List<Card> newCards ) {
+
+        cards.addAll( newCards );
+    }
+
+    void takeCards( List<Card> newCards ) {
+
+        cards.removeAll( newCards );
+    }
+
+    public String toString( ) {
+
+        String info = "Id: " + id + ". Name: " + name + ". Balance: " + balance + "\n";
+        return info;
+    }
 }
