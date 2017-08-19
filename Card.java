@@ -16,15 +16,26 @@ public class Card {
         setLabel( );
     }
 
-    int getDenomination( ) { return denomination; }
+    int getDenomination( ) {
+        return denomination;
+    }
 
-    int getSuit( ) { return suit; }
+    int getSuit( ) {
+        return suit;
+    }
 
-    boolean isAvailable( ) { return availability; }
+    boolean isAvailable( ) {
+        return availability;
+    }
 
-    void setAvailability( boolean cardAvailability ) { availability = cardAvailability; }
+    void setAvailability( boolean cardAvailability ) {
+        availability = cardAvailability;
+    }
 
-    String showLabel( ) { return label; }
+    String showLabel( ) {
+        return label;
+    }
+
 
     private void setLabel( ) {
 

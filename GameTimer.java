@@ -8,19 +8,16 @@ public class GameTimer {
 
 
     void setGameStartTime( ) {
-
         gameStartTime = System.currentTimeMillis( );
     }
 
 
     void setRoundStartTime( ) {
-
         roundStartTime = System.currentTimeMillis( );
     }
 
 
     long getRoundTime( ) {
-
         return System.currentTimeMillis( ) - roundStartTime;
     }
 

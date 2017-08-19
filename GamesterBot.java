@@ -22,6 +22,11 @@ public class GamesterBot {
 
     private int[][] chat;
 
+    static int lastProcessedUpdateId;
+
+    static List<Update> updates;
+    static int sizeOfUpdates;
+
     private static List<Update> GetUpdateList(int timeout, int offset) {
 
         GetUpdates getUpdates = new GetUpdates().limit(5).offset(offset).timeout( timeout );
@@ -30,33 +35,11 @@ public class GamesterBot {
         return  updates;
     }
 
+    //TODO: create menu and game procedures
     public static void main( String[] argc ) {
 
-        System.out.print( "STARTING BOT\n" );
-        //TelegramBot bot = TelegramBotAdapter.build( BOT_TOKEN );
+        initBot( );
 
-        //Getting the last worked update
-        //We need this to initialize getting message serviceß
-        int lastProcessedUpdateId;
-
-        //Getting old updates
-        List<Update> updates = GetUpdateList( 1, 0 );
-
-        //size of update's list
-        int sizeOfUpdates = updates.size();
-
-        //Setting the last update as worked
-        if ( sizeOfUpdates > 0 ) {
-
-            lastProcessedUpdateId = updates.get(sizeOfUpdates - 1).updateId();
-            System.out.printf("Last processed update id: %s\n", lastProcessedUpdateId);
-        } else {
-
-            lastProcessedUpdateId = 0;
-        }
-
-        //here we have bug in which there is infinite loop of first
-        //message if there were none of messages before bot started
         do {
 
             updates = GetUpdateList( 1, lastProcessedUpdateId + 1 );
@@ -79,9 +62,27 @@ public class GamesterBot {
                 }
             }
         } while ( true );
+    }
 
-        //System.out.print( getUpdates );
-        //Deck deck = new Deck( 36 );
-        //deck.ShowDeck( );
+    static void initBot( ) {
+
+        System.out.print( "STARTING BOT\n" );
+
+        //Getting the last worked update:
+        //Getting old updates
+        updates = GetUpdateList( 1, 0 );
+
+        //size of update's list
+        sizeOfUpdates = updates.size();
+
+        //Setting the last update as worked
+        if ( sizeOfUpdates > 0 ) {
+
+            lastProcessedUpdateId = updates.get(sizeOfUpdates - 1).updateId();
+            System.out.printf("Last processed update id: %s\n", lastProcessedUpdateId);
+        } else {
+
+            lastProcessedUpdateId = 0;
+        }
     }
 }
