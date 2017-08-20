@@ -9,12 +9,14 @@ public class Player {
     private String name;
     private List<Card> cards;
     private int balance;
+    private int room;
 
     Player( int newId, String newName ) {
 
         balance = 100;
         id = newId;
         name = newName;
+        room = 0;
     }
 
     int getId( ) {
@@ -41,6 +43,21 @@ public class Player {
     void takeCards( List<Card> newCards ) {
 
         cards.removeAll( newCards );
+    }
+
+    boolean isInRoom( ) {
+        if ( room != 0 ) {
+
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
+    void setRoom( int room ) {
+
+        this.room = room;
     }
 
     public String toString( ) {

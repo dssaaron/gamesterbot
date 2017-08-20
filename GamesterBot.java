@@ -20,48 +20,18 @@ public class GamesterBot {
 
     static TelegramBot bot = TelegramBotAdapter.build( BOT_TOKEN );
 
-    private int[][] chat;
+    //private int[][] chat;
 
     static int lastProcessedUpdateId;
 
     static List<Update> updates;
     static int sizeOfUpdates;
 
-    private static List<Update> GetUpdateList(int timeout, int offset) {
-
-        GetUpdates getUpdates = new GetUpdates().limit(5).offset(offset).timeout( timeout );
-        GetUpdatesResponse updatesResponse = bot.execute(getUpdates);
-        List<Update> updates = updatesResponse.updates();
-        return  updates;
-    }
-
-    //TODO: create menu and game procedures
     public static void main( String[] argc ) {
 
         initBot( );
+        messageProcessing( );
 
-        do {
-
-            updates = GetUpdateList( 1, lastProcessedUpdateId + 1 );
-            sizeOfUpdates = updates.size();
-            if ( sizeOfUpdates > 0 ) {
-
-                for ( int iUpdate = 0; iUpdate < sizeOfUpdates; iUpdate++ ) {
-
-                    String message = updates.get( iUpdate ).message( ).text( );
-                    lastProcessedUpdateId = updates.get( iUpdate ).updateId( );
-
-                    long chatId = updates.get( iUpdate ).message( ).chat( ).id( );
-
-                    //message logs
-                    System.out.printf( "%d : %s\n", chatId, message );
-
-                    //trying to resend back message
-                    SendMessage request = new SendMessage( chatId, message );
-                    bot.execute( request );
-                }
-            }
-        } while ( true );
     }
 
     static void initBot( ) {
@@ -84,5 +54,67 @@ public class GamesterBot {
 
             lastProcessedUpdateId = 0;
         }
+    }
+
+    static void messageProcessing( ) {
+
+        do {
+
+            updates = GetUpdateList( 1, lastProcessedUpdateId + 1 );
+            sizeOfUpdates = updates.size();
+            if ( sizeOfUpdates > 0 ) {
+
+                for ( int iUpdate = 0; iUpdate < sizeOfUpdates; iUpdate++ ) {
+
+                    String message = updates.get( iUpdate ).message( ).text( );
+                    lastProcessedUpdateId = updates.get( iUpdate ).updateId( );
+
+                    long senderId = updates.get( iUpdate ).message( ).chat( ).id( );
+
+                    //message logs
+                    System.out.printf( "%d : %s\n", senderId, message );
+
+                    if ( checkUserPosition( senderId ) ) {
+
+                        mainMenuProcessing( senderId );
+
+                    } else {
+
+                        inGameProcessing( senderId );
+                    }
+
+                    //trying if user is in main menu or in room process in different ways
+
+                }
+            }
+        } while ( true );
+    }
+
+    //true = mainmenu; false = ingame
+    static boolean checkUserPosition( long senderId ){
+
+        return false;
+    }
+
+    static void mainMenuProcessing( long senderId ) {
+
+        SendMessage message = new SendMessage( senderId, "UR IN MAIN MENU" );
+        bot.execute( message );
+    }
+
+    static void inGameProcessing( long senderId ) {
+
+        SendMessage message = new SendMessage( senderId, "UR IN A GAME" );
+        bot.execute( message );
+    }
+
+    //for future savings of user data
+    static void saveData( ) {}
+
+    private static List<Update> GetUpdateList(int timeout, int offset) {
+
+        GetUpdates getUpdates = new GetUpdates().limit(5).offset(offset).timeout( timeout );
+        GetUpdatesResponse updatesResponse = bot.execute(getUpdates);
+        return  updatesResponse.updates();
     }
 }

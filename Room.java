@@ -10,11 +10,11 @@ public class Room {
     private GameTimer timer;
     private boolean gameIsOn;
 
-    Room( int newRoomId, List<Player> newPlayers ) {
+    Room( int roomId, List<Player> newPlayers ) {
 
-        gameIsOn = false;
+        this.gameIsOn = false;
 
-        roomId = newRoomId;
+        this.roomId = roomId;
 
         for ( int i = 0; i < newPlayers.size( ); i++ ) {
             players.add( newPlayers.get( i ) );
@@ -23,9 +23,9 @@ public class Room {
 
     void startGame( ) {
 
-        gameIsOn = true;
-        timer.setGameStartTime();
-        timer.setRoundStartTime();
+        this.gameIsOn = true;
+        this.timer.setGameStartTime();
+        this.timer.setRoundStartTime();
     }
 
     private String showRoomInfo( ) {
